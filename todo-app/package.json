@@ -1,6 +1,6 @@
 {
   "name": "todo-app",
-  "version": "0.0.0",
+  "ver`si`on": "0.0.0",
   "private": true,
   "type": "module",
   "scripts": {
@@ -11,9 +11,14 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
+    "axios": "^1.6.8",
+    "bootstrap": "^5.3.3",
     "pinia": "^2.1.7",
+    "router": "^1.3.8",
     "vue": "^3.4.21",
-    "vue-router": "^4.3.0"
+    "vue-pagination-2": "^3.1.0",
+    "vue-router": "^4.3.0",
+    "vuejs-paginate": "^2.1.0"
   },
   "devDependencies": {
     "@rushstack/eslint-patch": "^1.3.3",
