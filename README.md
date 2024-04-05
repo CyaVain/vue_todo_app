@@ -3,7 +3,7 @@
 
 
 ### References in Vue.js
-1.  Fullstack basic CRUD Student's Profiles (FE: Vue.Js, AXIOS; BE: Node.Js,Express, Nodeemon, MongoDB)
+1.  Fullstack basic CRUD Student's Profiles (FE: Vue.Js, Axios, Vue Router ; BE: Node.Js, Express, Nodeemon, MongoDB)
 * github : https://github.com/CyaVain/fullstack_uv
 * deployed app : https://uv-fullstack-e1e9ca900d10.herokuapp.com
 
