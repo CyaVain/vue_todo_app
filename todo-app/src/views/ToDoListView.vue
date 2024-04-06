@@ -12,6 +12,15 @@
         <li v-else>Status: Not Done</li>
       </ol>
     </div>
+    <div class="page-cursor">
+      <button v-if="currentPage == 1" class="btn btn-primary mx-3" disabled>Previous Page</button>
+      <button v-else class="btn btn-primary mx-3" @click="prevPage()">Previous Page</button>
+
+      <button v-if="currentPage == totalPage" class="btn btn-primary mx-3" disabled>
+        Next Page
+      </button>
+      <button v-else class="btn btn-primary mx-3" @click="nextPage()">Next Page</button>
+    </div>
   </div>
 </template>
 
@@ -23,7 +32,8 @@ export default {
     return {
       ToDoList: [{}],
       pageSize: 10,
-      currentPage: 1
+      currentPage: 1,
+      totalPage: 0
     }
   },
   computed: {
@@ -38,10 +48,20 @@ export default {
   },
   async mounted() {
     this.ToDoList = await ToDoList
+    this.getTotalPage()
   },
   methods: {
     paginate(pageNumber) {
       this.currentPage = pageNumber
+    },
+    getTotalPage() {
+      this.totalPage = Math.ceil(this.ToDoList.length / this.pageSize)
+    },
+    prevPage() {
+      this.currentPage -= 1
+    },
+    nextPage() {
+      this.currentPage += 1
     }
   }
 }
