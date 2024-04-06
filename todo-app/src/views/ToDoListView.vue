@@ -1,62 +1,55 @@
 <template>
   <div class="container">
-    <h1>This Is Task List</h1>
-    <div>
+    <h1 class="text-center">To Do list</h1>
+    <div class="my-2">
       <h5>Show Task By Status</h5>
-      <button class="btn btn-info" @click="showAll()">Show All</button>
-      <button class="btn btn-success mx-3" @click="showDone()">Done</button>
-      <button class="btn btn-warning" @click="showOnProgress()">On Progress</button>
+      <TaskButtonComponent
+        @showAll="showAll"
+        @showDone="showDone"
+        @showOnProgress="showOnProgress"
+      />
     </div>
-    <table class="table">
-      <thead>
-        <tr>
-          <th scope="col">No.</th>
-          <th scope="col">Task Id</th>
-          <th scope="col">User Id</th>
-          <th scope="col">Title</th>
-          <th scope="col">Status</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr
-          v-for="(todo, index) in paginatedList"
-          :key="todo.id"
-          :class="todo.completed ? 'table-success' : 'table-warning'"
-        >
-          <td>{{ (currentPage - 1) * pageSize + index + 1 }}</td>
-          <td>{{ todo.id }}</td>
-          <td>{{ todo.userId }}</td>
-          <td>{{ todo.title }}</td>
-          <td v-if="todo.completed == true">Done</td>
-          <td v-else>On Progress</td>
-        </tr>
-      </tbody>
-    </table>
-    <div class="page-cursor">
-      <button v-if="currentPage == 1" class="btn btn-primary mx-3" disabled>Previous</button>
-      <button v-else class="btn btn-primary mx-3" @click="prevPage()">Previous</button>
-
-      <button class="btn btn-primary mx-3" @click="jumpPage(1)">First Page</button>
-      <button class="btn btn-primary mx-3" @click="jumpPage(totalPage)">Last Page</button>
-
-      <button v-if="currentPage == totalPage" class="btn btn-primary mx-3" disabled>
-        Next Page
-      </button>
-      <button v-else class="btn btn-primary mx-3" @click="nextPage()">Next</button>
+    <div>
+      <h3>Total {{ status }} Tasks : {{ this.ToDoList.length }}</h3>
     </div>
+    <TableComponent
+      :ToDoList="ToDoList"
+      :paginatedList="paginatedList"
+      :currentPage="currentPage"
+      :pageSize="pageSize"
+      @deleteRow="deleteRow"
+      @updateRow="updateRow"
+    />
+
+    <PageCursorComponent
+      :currentPage="currentPage"
+      :totalPage="totalPage"
+      @prevPage="prevPage"
+      @nextPage="nextPage"
+      @jumpPage="jumpPage"
+    />
   </div>
 </template>
 
 <script>
 import { ToDoList } from '../stores/ToDoData'
+import TaskButtonComponent from '../components/moleculs/TaskButtonComponent.vue'
+import TableComponent from '@/components/TableComponent.vue'
+import PageCursorComponent from '@/components/moleculs/PageCursorComponent.vue'
 
 export default {
+  components: {
+    TaskButtonComponent,
+    TableComponent,
+    PageCursorComponent
+  },
   data() {
     return {
       ToDoList: [],
       pageSize: 10,
       currentPage: 1,
-      totalPage: 0
+      totalPage: 0,
+      status: 'All'
     }
   },
   computed: {
@@ -89,19 +82,37 @@ export default {
     jumpPage(page) {
       this.currentPage = page
     },
+    async deleteRow(todo) {
+      const index = this.ToDoList.findIndex((t) => t.id === todo.id)
+      if (index !== -1) {
+        this.ToDoList.splice(index, 1)
+        alert('Task Deleted Successfully')
+        this.getTotalPage()
+      }
+    },
+    async updateRow(todo) {
+      const index = this.ToDoList.findIndex((t) => t.id === todo.id)
+      this.ToDoList[index].completed = true
+      alert('Task Done')
+      this.ToDoList = await ToDoList
+      this.getTotalPage()
+    },
     async showDone() {
+      this.status = 'Done / Completed'
       this.ToDoList = await ToDoList
       this.ToDoList = this.ToDoList.filter((todo) => todo.completed === true)
       this.getTotalPage()
       this.currentPage = 1
     },
     async showOnProgress() {
+      this.status = 'On Progress'
       this.ToDoList = await ToDoList
       this.ToDoList = this.ToDoList.filter((todo) => todo.completed === false)
       this.getTotalPage()
       this.currentPage = 1
     },
     async showAll() {
+      this.status = 'All'
       this.ToDoList = await ToDoList
       this.getTotalPage()
       this.currentPage = 1
@@ -109,5 +120,3 @@ export default {
   }
 }
 </script>
-
-<style scoped></style>
