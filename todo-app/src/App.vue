@@ -7,8 +7,8 @@
           <img src="./assets/img/home.png" class="mx-2" alt="HalamanUtama" />Halaman
           Utama</router-link
         >
-        <router-link to="/add">
-          <img src="./assets/img/addItem.png" class="mx-2" alt="AddData" />Add List</router-link
+        <router-link to="/add-task">
+          <img src="./assets/img/addItem.png" class="mx-2" alt="AddData" />Add New Task</router-link
         >
       </nav>
     </header>
