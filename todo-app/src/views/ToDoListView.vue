@@ -96,6 +96,7 @@ export default {
       alert('Task Done')
       this.ToDoList = await ToDoList
       this.getTotalPage()
+      this.status = 'All'
     },
     async showDone() {
       this.status = 'Done / Completed'
