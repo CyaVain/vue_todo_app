@@ -1,6 +1,15 @@
 ## To Do App
 ### by KEVIN OCTAVIANUS HALIM
 
+### Demonstration
+In the OUTPUT.pdf
+
+### Tools
+  * Vue 3.4.21
+  * Vue Router 4.3.0
+  * Bootstrap 5.3.3
+  * Axios 1.6.8
+
 
 ### References in Vue.js
 1.  Fullstack basic CRUD Student's Profiles (FE: Vue.Js, Axios, Vue Router ; BE: Node.Js, Express, Mongoose, MongoDB)
